@@ -4,19 +4,23 @@ let values = [6, 15, 2, 8, 10];
 
 
 multipleFactorial = (values) => {
-    let factorialArray = []
-    values.forEach(element => {
-        let factorial = 1;
-        for (let i = 1; i <= element; i++) {
-            factorial *= i
+    
+    let factorial = values.map(function (numero) {
+        let factorialTotal = 1
+
+        for (let i = 1; i <= numero; i++) {
+
+            factorialTotal *= i
 
         }
-        factorialArray.push(factorial)
+
+        return factorialTotal
 
     })
-    return factorialArray;
+
+    return factorial
 
 }
 
-let GreaterThan = multipleFactorial(values)
-console.log(GreaterThan);
+let factorial = multipleFactorial(values)
+console.log(factorial);
