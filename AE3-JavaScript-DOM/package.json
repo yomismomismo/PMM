@@ -1,0 +1,18 @@
+{
+  "name": "ae3-dom",
+  "version": "0.0.1",
+  "description": "Recopilación de datos de un usuario.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yomismomismo/PMM/tree/AE3"
+  },
+  "author": "Borja Hervás",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.20"
+  }
+}
