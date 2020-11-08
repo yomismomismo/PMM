@@ -1,0 +1,26 @@
+body{margin: 0;}
+nav{width: 100%; 
+    background-color: #373737;
+    height: 60px;}
+ul{margin: auto;}
+li{display: inline;
+color: white;
+font-size: 22px;}
+
+div{
+    border: solid 1px black;
+    width: 100%;
+    justify-items: center;
+    display: grid;
+}
+
+
+p{font-family: sans-serif;
+    font-size: 16px;
+    color: #5d5d5d;
+}
+.error{
+    background-color: grey;
+    color: rgb(236, 122, 122) !important; 
+    /* No tengo ni idea de porque el important no funciona */
+}
