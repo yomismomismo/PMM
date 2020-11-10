@@ -3,12 +3,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     let div = document.createElement("div");
-    let backButton = document.getElementById("back");
-    let nextButton = document.getElementById("next");
+    let backButton = document.getElementById("backButton");
+    let nextButton = document.getElementById("nextButton");
     document.body.appendChild(div);
     div.style.border = "solid 1px black";
     let paginas = ["bienvenida", "Formulario", "ErrorCheck"]
-    let contadorPagina = 0
+    let contadorPagina = 0;
     let name = "";
     let surname = "";
     let date = "";
@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let postalCode = "";
     let province = "";
     let town = "";
+    let callBack = "";
     backButton.addEventListener("click", function () {
         if (contadorPagina > 0) {
             contadorPagina -= 1;
@@ -23,18 +24,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     nextButton.addEventListener("click", function () {
+        if (contadorPagina == 0) {
+            let urlInput = document.getElementById("url")
+            callBack = urlInput.value;  
+        }
+    if ( callBack != "") {
         if (contadorPagina < paginas.length - 1) {
             contadorPagina += 1;
         }
         paginador(contadorPagina)
+    }
+
     });
 
     bienvenida = () => {
-        let contadorElementos = div.childElementCount
-        if (contadorElementos > 0) {
-            for (let index = 0; index <= contadorElementos; index++) {
+        backButton.style.display ="none"
+        nextButton.setAttribute("disabled", null);
+        if (div.childElementCount > 0) {
+            for (let index = 0; index <= div.childElementCount; index++) {
                 div.removeChild(div.children[0]);
-
             }
         }
 
@@ -44,17 +52,34 @@ document.addEventListener('DOMContentLoaded', () => {
         titleText.style.textAlign = "center";
         contentText.textContent = "Para poder registrarte en esta página deberás rellenar este formulario.";
         contentText.style.textAlign = "center";
+        let urlLabel= document.createElement("p");
+        urlLabel.textContent = "URL";
+        let urlInput = document.createElement("input");
+        urlInput.id = "url";
+
         div.appendChild(titleText);
         div.appendChild(contentText);
+        div.appendChild(urlLabel);
+        div.appendChild(urlInput);
+        let input = document.getElementById("url")
+        input.addEventListener("keyup", function () {
+            if (input.value !="") {
+                nextButton.removeAttribute("disabled")
+            }
+            else{
+                nextButton.setAttribute("disabled", null);
+            }
 
-
+          });
     }
     if (contadorPagina == 0) {
         bienvenida()
     }
     Formulario = () => {
+        backButton.style.display =""
         let contadorElementos = div.childElementCount
-        for (let index = 0;  index < contadorElementos ; index++) {
+        
+        for (let index = 0; index < contadorElementos; index++) {
             div.removeChild(div.children[0]);
 
         }
@@ -192,11 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         form.appendChild(inputTown);
         form.appendChild(divErrorTown);
         form.appendChild(br);
-        let submitButton = document.createElement("input");
-        submitButton.type = "button";
-        submitButton.value = "Enviar";
-        form.appendChild(submitButton);
-        submitButton.addEventListener("click", function () { ErrorCheck() });
+
 
     }
 
@@ -290,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
 
-        if (inputCheckAddress.value !="") {
+        if (inputCheckAddress.value != "") {
             address = inputCheckAddress.value;
         }
 
@@ -442,9 +463,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let completeAddress = document.createElement("p");
 
         if (address == "") {
-        completeAddress.textContent = "-";
+            completeAddress.textContent = "-";
         }
-        else{
+        else {
             completeAddress.textContent = address;
         }
 
@@ -457,7 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
         provinceLabel.textContent = "Provincia";
         let completeProvince = document.createElement("p");
         completeProvince.textContent = province;
-        
+
         let townLabel = document.createElement("h4");
         townLabel.textContent = "Municipio";
         let completeTown = document.createElement("p");
@@ -478,10 +499,66 @@ document.addEventListener('DOMContentLoaded', () => {
         div.appendChild(townLabel);
         div.appendChild(completeTown);
 
+        let cancelButton = document.createElement("input");
+        cancelButton.type = "button";
+        cancelButton.id = "desagree";
+        cancelButton.value = "Cancelar";
+        div.appendChild(cancelButton);
 
+        let acceptButton = document.createElement("input");
+        acceptButton.type = "button";
+        acceptButton.id = "agree";
+        acceptButton.value = "Aceptar";
+        div.appendChild(acceptButton);
+
+
+        let disagreeButton = document.getElementById("desagree")
+        disagreeButton.addEventListener("click", function () {
+            if (contadorPagina > 0) {
+                contadorPagina -= 1;
+                paginador(contadorPagina);
+            }
+        });
+
+        let agreeButton = document.getElementById("agree")
+        agreeButton.addEventListener("click", function () {
+            paginas.push("finalPage")
+
+                contadorPagina = 4;
+            
+            paginador(contadorPagina)
+        });
 
     }
-let showUserDataPage=false;
+
+    finalPage = () =>{
+
+        let contadorElementos = div.childElementCount;
+        for (let index = 0; index < contadorElementos; index++) {
+            div.removeChild(div.children[0]);
+        }
+
+        let titleText = document.createElement("h1");
+        let contentText = document.createElement("p");
+        titleText.textContent = "Felicidades!!!!";
+        titleText.style.textAlign = "center";
+        contentText.textContent = "Acabas de registrarte en nuestra web. gracias.";
+        contentText.style.textAlign = "center";
+        div.appendChild(titleText);
+        div.appendChild(contentText);
+
+
+
+        document.getElementById("back").style.display="none";
+        let finish = document.getElementById("nextButton")
+        finish.textContent="Terminar"
+        finish.addEventListener("click", function () {
+            location.href= callBack
+        });
+
+    }
+
+    let showUserDataPage = false;
     paginador = (pagina) => {
 
         if (pagina == 0) {
@@ -513,6 +590,11 @@ let showUserDataPage=false;
 
         }
 
+        else if (pagina == 4) {
+            finalPage()
+
+
+        }
 
 
     }
