@@ -7,11 +7,32 @@ document.addEventListener('DOMContentLoaded', () => {
     let nextButton = document.getElementById("next");
     document.body.appendChild(div);
     div.style.border = "solid 1px black";
-
+    let paginas = ["bienvenida", "Formulario", "ErrorCheck"]
+    let contadorPagina = 0
+    let name = "";
+    let surname = "";
+    let date = "";
+    let address = "";
+    let postalCode = "";
+    let province = "";
+    let town = "";
+    backButton.addEventListener("click", function () {
+        if (contadorPagina > 0) {
+            contadorPagina -= 1;
+            paginador(contadorPagina);
+        }
+    });
+    nextButton.addEventListener("click", function () {
+        if (contadorPagina < paginas.length - 1) {
+            contadorPagina += 1;
+        }
+        paginador(contadorPagina)
+    });
 
     bienvenida = () => {
-        if (div.childElementCount > 0) {
-            for (let index = 0; index <= div.childElementCount; index++) {
+        let contadorElementos = div.childElementCount
+        if (contadorElementos > 0) {
+            for (let index = 0; index <= contadorElementos; index++) {
                 div.removeChild(div.children[0]);
 
             }
@@ -26,16 +47,17 @@ document.addEventListener('DOMContentLoaded', () => {
         div.appendChild(titleText);
         div.appendChild(contentText);
 
-        nextButton.addEventListener("click", function () { Formulario() });
 
     }
+    if (contadorPagina == 0) {
+        bienvenida()
+    }
+    Formulario = () => {
+        let contadorElementos = div.childElementCount
+        for (let index = 0;  index < contadorElementos ; index++) {
+            div.removeChild(div.children[0]);
 
-    Formulario = (pagina) => {
-
-            for (let index = 0; index <= div.childElementCount; index++) {
-                div.removeChild(div.children[0]);
-
-            }
+        }
 
         let errorDiv = document.createElement("div");
         errorDiv.style.display = "none";
@@ -51,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inputName.setAttribute("required", "");
         let divErrorName = document.createElement("div");
         divErrorName.id = "divErrorName";
-        divErrorName.className="error";
+        divErrorName.className = "error";
         divErrorName.style.display = "none";
 
         let labelSurname = document.createElement("p");
@@ -61,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inputSurname.id = "inputSurname";
         let divErrorSurname = document.createElement("div");
         divErrorSurname.id = "divErrorSurname"
-        divErrorSurname.className="error";
+        divErrorSurname.className = "error";
         divErrorSurname.style.display = "none";
 
         let labelDate = document.createElement("p");
@@ -71,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inputDate.type = "date"
         let divErrorDate = document.createElement("div");
         divErrorDate.id = "divErrorDate"
-        divErrorDate.className="error";
+        divErrorDate.className = "error";
         divErrorDate.style.display = "none";
 
         let labelAddress = document.createElement("p");
@@ -80,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inputAddress.id = "inputAddress"
         let divErrorAddress = document.createElement("div");
         divErrorAddress.id = "divErrorAddress"
-        divErrorAddress.className="error";
+        divErrorAddress.className = "error";
         divErrorAddress.style.display = "none";
 
         let labelPostalCode = document.createElement("p");
@@ -95,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let divErrorPostalCode = document.createElement("div");
         divErrorPostalCode.id = "divErrorPostalCode";
-        divErrorPostalCode.className="error";
+        divErrorPostalCode.className = "error";
         divErrorPostalCode.style.display = "none";
 
         let labelProvince = document.createElement("p");
@@ -133,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inputTown.style.textTransform = "uppercase"
         let divErrorTown = document.createElement("div");
         divErrorTown.id = "divErrorTown";
-        divErrorTown.className="error";
+        divErrorTown.className = "error";
         divErrorTown.style.display = "none";
         let br = document.createElement("br");
 
@@ -175,8 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
         submitButton.value = "Enviar";
         form.appendChild(submitButton);
         submitButton.addEventListener("click", function () { ErrorCheck() });
-        backButton.addEventListener("click", function () { bienvenida() });
+
     }
+
 
     let errorName = false;
     let errorSurname = false;
@@ -184,12 +207,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let errorPostalCode = false;
     let errorProvince = false;
     let errorTown = false;
-
+    let allTrue = false;
     ErrorCheck = () => {
 
         let inputCheckName = document.getElementById("inputName");
         let inputCheckSurname = document.getElementById("inputSurname");
         let inputCheckDate = document.getElementById("inputDate");
+        let inputCheckAddress = document.getElementById("inputAddress");
         let inputCheckPostalCode = document.getElementById("inputPostalCode");
         let inputCheckProvince = document.getElementById("inputProvince");
         let inputCheckTown = document.getElementById("inputTown");
@@ -202,7 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let divErrorProvince = document.getElementById("divErrorProvince");
         let divErrorTown = document.getElementById("divErrorTown");
 
-        let form = document.getElementById("form");
         let errorBox = document.getElementById("errorBox");
 
         if (inputCheckName.value == "" && errorName != true) {
@@ -230,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
             divErrorName.style.display = "none"
-
+            name = inputCheckName.value;
             errorName = false;
 
         }
@@ -262,10 +285,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             divErrorSurname.style.display = "none";
+            surname = inputCheckSurname.value;
             errorSurname = false;
 
         }
 
+        if (inputCheckAddress.value !="") {
+            address = inputCheckAddress.value;
+        }
 
 
 
@@ -292,12 +319,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 divErrorDate.removeChild(errorMessageDate1);
             }
 
+            date = inputCheckDate.value;
             divErrorDate.style.display = "none";
             errorDate = false;
 
         }
 
-        if (inputCheckPostalCode.value == "" || isNaN(inputCheckPostalCode.value) && errorPostalCode != true) {
+        if (inputCheckPostalCode.value == "" && errorPostalCode != true || isNaN(inputCheckPostalCode.value) && errorPostalCode != true) {
             errorBox.style.display = "block";
             let errorMessagePostalCode = document.createElement("p");
             errorMessagePostalCode.textContent = "Debes Introducir un Código Postal Correcto";
@@ -311,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
             errorPostalCode = true;
         }
 
-        if (inputCheckPostalCode.value != "" && inputCheckPostalCode.value.length == 5) {
+        if (inputCheckPostalCode.value != "" && inputCheckPostalCode.value.length == 5 && !isNaN(inputCheckPostalCode.value)) {
 
             let ErrorBoxPostalCode = document.getElementById("errorPostalCode");
             let errorMessagePostalCode1 = document.getElementById("errorPostalCode1");
@@ -321,6 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             divErrorPostalCode.style.display = "none";
+            postalCode = inputCheckPostalCode.value;
             errorPostalCode = false;
 
         }
@@ -347,6 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 divErrorProvince.removeChild(errorMessageProvince1);
             }
 
+            province = inputCheckProvince.value;
             divErrorProvince.style.display = "none";
             errorProvince = false;
 
@@ -373,17 +403,119 @@ document.addEventListener('DOMContentLoaded', () => {
                 ErrorBoxTown.remove();
                 divErrorTown.removeChild(errorMessageTown1);
             }
-
+            town = inputCheckTown.value;
             divErrorTown.style.display = "none";
             errorTown = false;
 
         }
 
+        if (errorName != true && errorSurname != true && errorDate != true && errorPostalCode != true && errorProvince != true && errorTown != true) {
+            allTrue = true;
+            return allTrue;
+        }
+    }
 
+    showUserData = () => {
+        let contadorElementos = div.childElementCount;
+        for (let index = 0; index < contadorElementos; index++) {
+            div.removeChild(div.children[0]);
+        }
+
+
+        let nameLabel = document.createElement("h4");
+        nameLabel.textContent = "Nombre";
+        let completeName = document.createElement("p");
+        completeName.textContent = name;
+
+        let surnameLabel = document.createElement("h4");
+        surnameLabel.textContent = "Apellidos";
+        let completeSurname = document.createElement("p");
+        completeSurname.textContent = surname;
+
+        let dateLabel = document.createElement("h4");
+        dateLabel.textContent = "Fecha";
+        let completeDate = document.createElement("p");
+        completeDate.textContent = date;
+
+        let addressLabel = document.createElement("h4");
+        addressLabel.textContent = "Dirección";
+        let completeAddress = document.createElement("p");
+
+        if (address == "") {
+        completeAddress.textContent = "-";
+        }
+        else{
+            completeAddress.textContent = address;
+        }
+
+        let postalCodeLabel = document.createElement("h4");
+        postalCodeLabel.textContent = "Código Postal";
+        let completePostalCode = document.createElement("p");
+        completePostalCode.textContent = postalCode;
+
+        let provinceLabel = document.createElement("h4");
+        provinceLabel.textContent = "Provincia";
+        let completeProvince = document.createElement("p");
+        completeProvince.textContent = province;
+        
+        let townLabel = document.createElement("h4");
+        townLabel.textContent = "Municipio";
+        let completeTown = document.createElement("p");
+        completeTown.textContent = town;
+
+        div.appendChild(nameLabel);
+        div.appendChild(completeName);
+        div.appendChild(surnameLabel);
+        div.appendChild(completeSurname);
+        div.appendChild(dateLabel);
+        div.appendChild(completeDate);
+        div.appendChild(addressLabel);
+        div.appendChild(completeAddress);
+        div.appendChild(postalCodeLabel);
+        div.appendChild(completePostalCode);
+        div.appendChild(provinceLabel);
+        div.appendChild(completeProvince);
+        div.appendChild(townLabel);
+        div.appendChild(completeTown);
+
+
+
+    }
+let showUserDataPage=false;
+    paginador = (pagina) => {
+
+        if (pagina == 0) {
+            bienvenida();
+        }
+
+        else if (pagina == 1) {
+            Formulario();
+            errorName = false;
+            errorSurname = false;
+            errorDate = false;
+            errorPostalCode = false;
+            errorProvince = false;
+            errorTown = false;
+            allTrue = false;
+            showUserDataPage = false
+        }
+
+        else if (pagina == 2 || pagina == 3) {
+            if (!allTrue) {
+                allTrue = ErrorCheck();
+            }
+
+            if (allTrue && !showUserDataPage) {
+                showUserDataPage = true;
+                paginas.push("showUserData");
+                showUserData();
+            }
+
+        }
 
 
 
     }
 
-    bienvenida()
+
 })
