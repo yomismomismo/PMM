@@ -1,6 +1,6 @@
 {
   "name": "ae3-dom",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Recopilación de datos de un usuario.",
   "main": "index.js",
   "scripts": {

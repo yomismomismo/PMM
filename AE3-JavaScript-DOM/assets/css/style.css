@@ -8,20 +8,35 @@ color: white;
 font-size: 22px;}
 
 div{
-    border: solid 1px black;
     width: 100%;
     justify-items: center;
     display: grid;
+    height: 100%;
 }
 
 .error{
     background-color: grey;
     color: rgb(236, 122, 122) !important; 
-    /* No tengo ni idea de porque el important no funciona */
+
 }
 
 p{font-family: sans-serif;
     font-size: 16px;
     color: #5d5d5d;
 }
+button{
+    background-color: blue;
+    color: white;
+    border-radius: 3px;
 
+}
+button:hover{
+    background-color: rgb(246, 164, 56);
+    color: black;
+}
+button:disabled{
+    background-color: rgb(71, 71, 71);
+    color: rgb(255, 255, 255);
+}
+
+#errorBox{ text-align: center;}

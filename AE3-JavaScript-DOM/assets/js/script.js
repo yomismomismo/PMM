@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let backButton = document.getElementById("backButton");
     let nextButton = document.getElementById("nextButton");
     document.body.appendChild(div);
-    div.style.border = "solid 1px black";
     let paginas = ["bienvenida", "Formulario", "ErrorCheck"]
     let contadorPagina = 0;
     let name = "";
@@ -53,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         contentText.textContent = "Para poder registrarte en esta página deberás rellenar este formulario.";
         contentText.style.textAlign = "center";
         let urlLabel= document.createElement("p");
-        urlLabel.textContent = "URL";
+        urlLabel.textContent = "URL (Para continuar debes introducir una URL)";
         let urlInput = document.createElement("input");
         urlInput.id = "url";
 
@@ -76,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bienvenida()
     }
     Formulario = () => {
+        nextButton.removeAttribute("disabled")
         backButton.style.display =""
         let contadorElementos = div.childElementCount
         
@@ -84,15 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
 
-        let errorDiv = document.createElement("div");
-        errorDiv.style.display = "none";
-        errorDiv.id = "errorBox";
 
         let form = document.createElement("Form");
         form.id = "form"
 
         let labelName = document.createElement("p");
-        labelName.textContent = "Nombre";
+        labelName.textContent = "Nombre *";
         let inputName = document.createElement("input");
         inputName.id = "inputName";
         inputName.setAttribute("required", "");
@@ -102,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         divErrorName.style.display = "none";
 
         let labelSurname = document.createElement("p");
-        labelSurname.textContent = "Apellidos";
+        labelSurname.textContent = "Apellidos *";
         let inputSurname = document.createElement("input");
         inputSurname.setAttribute("required", "")
         inputSurname.id = "inputSurname";
@@ -112,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         divErrorSurname.style.display = "none";
 
         let labelDate = document.createElement("p");
-        labelDate.textContent = "Date";
+        labelDate.textContent = "Date *";
         let inputDate = document.createElement("input");
         inputDate.id = "inputDate";
         inputDate.type = "date"
@@ -131,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         divErrorAddress.style.display = "none";
 
         let labelPostalCode = document.createElement("p");
-        labelPostalCode.textContent = "Código Postal";
+        labelPostalCode.textContent = "Código Postal *";
         let inputPostalCode = document.createElement("input");
         inputPostalCode.id = "inputPostalCode"
         inputPostalCode.setAttribute("required", "")
@@ -146,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         divErrorPostalCode.style.display = "none";
 
         let labelProvince = document.createElement("p");
-        labelProvince.textContent = "Provincia";
+        labelProvince.textContent = "Provincia *";
         let inputProvince = document.createElement("select");
         inputProvince.id = "inputProvince"
         inputProvince.setAttribute("required", "")
@@ -173,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         divErrorProvince.className = "error"
 
         let labelTown = document.createElement("p");
-        labelTown.textContent = "Municipio";
+        labelTown.textContent = "Municipio *";
         let inputTown = document.createElement("input");
         inputTown.id = "inputTown";
         inputTown.setAttribute("required", "")
@@ -186,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        div.appendChild(errorDiv);
+
         div.appendChild(form);
 
         form.appendChild(labelName);
@@ -230,7 +227,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let errorTown = false;
     let allTrue = false;
     ErrorCheck = () => {
-
+        let errorDiv = document.createElement("div");
+        errorDiv.style.display = "none";
+        errorDiv.id = "errorBox";
+        errorDiv.className = "error";
+        div.before(errorDiv);
         let inputCheckName = document.getElementById("inputName");
         let inputCheckSurname = document.getElementById("inputSurname");
         let inputCheckDate = document.getElementById("inputDate");
@@ -254,9 +255,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let errorMessageName = document.createElement("p");
             errorMessageName.textContent = "Debes Introducir un nombre";
             errorMessageName.id = "errorName";
+            errorMessageName.className = "error";
             let errorMessageName1 = document.createElement("p");
             errorMessageName1.textContent = "Debes Introducir un nombre";
             errorMessageName1.id = "errorName1";
+            errorMessageName1.className = "error";
             divErrorName.style.display = "block"
             errorBox.appendChild(errorMessageName)
             divErrorName.appendChild(errorMessageName1)
@@ -286,9 +289,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let errorMessageSurname = document.createElement("p");
             errorMessageSurname.textContent = "Debes Introducir un apellido";
             errorMessageSurname.id = "errorSurname"
+            errorMessageSurname.className = "error";
             let errorMessageSurname1 = document.createElement("p");
             errorMessageSurname1.textContent = "Debes Introducir un apellido";
             errorMessageSurname1.id = "errorSurname1";
+            errorMessageSurname1.className = "error";
             divErrorSurname.style.display = "block";
             errorBox.appendChild(errorMessageSurname);
             divErrorSurname.appendChild(errorMessageSurname1);
@@ -322,9 +327,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let errorMessageDate = document.createElement("p");
             errorMessageDate.textContent = "Debes introducir una Fecha";
             errorMessageDate.id = "errorDate";
+            errorMessageDate.className = "error";
             let errorMessageDate1 = document.createElement("p");
             errorMessageDate1.textContent = "Debes introducir una Fecha";
             errorMessageDate1.id = "errorDate1";
+            errorMessageDate1.className = "error";
             divErrorDate.style.display = "block";
             errorBox.appendChild(errorMessageDate);
             divErrorDate.appendChild(errorMessageDate1);
@@ -351,9 +358,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let errorMessagePostalCode = document.createElement("p");
             errorMessagePostalCode.textContent = "Debes Introducir un Código Postal Correcto";
             errorMessagePostalCode.id = "errorPostalCode";
+            errorMessagePostalCode.className = "error";
             let errorMessagePostalCode1 = document.createElement("p");
             errorMessagePostalCode1.textContent = "Debes Introducir un Código Postal Correcto (ej. 12345)";
             errorMessagePostalCode1.id = "errorPostalCode1";
+            errorMessagePostalCode1.className = "error";
             divErrorPostalCode.style.display = "block";
             errorBox.appendChild(errorMessagePostalCode);
             divErrorPostalCode.appendChild(errorMessagePostalCode1);
@@ -380,9 +389,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let errorMessageProvince = document.createElement("p");
             errorMessageProvince.textContent = "Debes seleccionar una provincia";
             errorMessageProvince.id = "errorProvince";
+            errorMessageProvince.className = "error";
             let errorMessageProvince1 = document.createElement("p");
             errorMessageProvince1.textContent = "Debes seleccionar una provincia";
             errorMessageProvince1.id = "errorProvince1";
+            errorMessageProvince1.className = "error";
             divErrorProvince.style.display = "block";
             errorBox.appendChild(errorMessageProvince);
             divErrorProvince.appendChild(errorMessageProvince1);
@@ -408,9 +419,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let errorMessageTown = document.createElement("p");
             errorMessageTown.textContent = "Debes introducir un municipio";
             errorMessageTown.id = "errorTown";
+            errorMessageTown.className = "error";
             let errorMessageTown1 = document.createElement("p");
             errorMessageTown1.textContent = "Debes introducir un municipio";
             errorMessageTown1.id = "errorTown1";
+            errorMessageTown1.className = "error";
             divErrorTown.style.display = "block";
             errorBox.appendChild(errorMessageTown);
             divErrorTown.appendChild(errorMessageTown1);
@@ -437,52 +450,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     showUserData = () => {
+        nextButton.setAttribute("disabled", null);
         let contadorElementos = div.childElementCount;
         for (let index = 0; index < contadorElementos; index++) {
             div.removeChild(div.children[0]);
         }
 
+        let UserObject = {
 
+            userName: name,
+            userSurname: surname,
+            userDate: date,
+            userAddress: address,
+            userPostalCode: postalCode,
+            userProvince: province,
+            userTown: town
+        }
+        console.log(Object.values(UserObject));
         let nameLabel = document.createElement("h4");
         nameLabel.textContent = "Nombre";
         let completeName = document.createElement("p");
-        completeName.textContent = name;
+        completeName.textContent = Object.values(UserObject)[0];
 
         let surnameLabel = document.createElement("h4");
         surnameLabel.textContent = "Apellidos";
         let completeSurname = document.createElement("p");
-        completeSurname.textContent = surname;
+        completeSurname.textContent = Object.values(UserObject)[1];
 
         let dateLabel = document.createElement("h4");
         dateLabel.textContent = "Fecha";
         let completeDate = document.createElement("p");
-        completeDate.textContent = date;
+        completeDate.textContent = Object.values(UserObject)[2];
 
         let addressLabel = document.createElement("h4");
         addressLabel.textContent = "Dirección";
         let completeAddress = document.createElement("p");
 
-        if (address == "") {
+        if (Object.values(UserObject)[3] == "") {
             completeAddress.textContent = "-";
         }
         else {
-            completeAddress.textContent = address;
+            completeAddress.textContent = Object.values(UserObject)[3];
         }
 
         let postalCodeLabel = document.createElement("h4");
         postalCodeLabel.textContent = "Código Postal";
         let completePostalCode = document.createElement("p");
-        completePostalCode.textContent = postalCode;
+        completePostalCode.textContent = Object.values(UserObject)[4];
 
         let provinceLabel = document.createElement("h4");
         provinceLabel.textContent = "Provincia";
         let completeProvince = document.createElement("p");
-        completeProvince.textContent = province;
+        completeProvince.textContent = Object.values(UserObject)[5];
 
         let townLabel = document.createElement("h4");
         townLabel.textContent = "Municipio";
         let completeTown = document.createElement("p");
-        completeTown.textContent = town;
+        completeTown.textContent = Object.values(UserObject)[6];
 
         div.appendChild(nameLabel);
         div.appendChild(completeName);
@@ -499,16 +523,15 @@ document.addEventListener('DOMContentLoaded', () => {
         div.appendChild(townLabel);
         div.appendChild(completeTown);
 
-        let cancelButton = document.createElement("input");
-        cancelButton.type = "button";
+        let cancelButton = document.createElement("button");
+
         cancelButton.id = "desagree";
-        cancelButton.value = "Cancelar";
+        cancelButton.textContent = "Cancelar";
         div.appendChild(cancelButton);
 
-        let acceptButton = document.createElement("input");
-        acceptButton.type = "button";
+        let acceptButton = document.createElement("button");
         acceptButton.id = "agree";
-        acceptButton.value = "Aceptar";
+        acceptButton.textContent = "Aceptar";
         div.appendChild(acceptButton);
 
 
@@ -532,7 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     finalPage = () =>{
-
+        nextButton.removeAttribute("disabled");
         let contadorElementos = div.childElementCount;
         for (let index = 0; index < contadorElementos; index++) {
             div.removeChild(div.children[0]);
